@@ -1,6 +1,6 @@
 ---
 name: data-analysis
-description: "Structured data analysis using DuckDB and Six Thinking Hats methodology. Analyzes CSV, Parquet, and JSON datasets with optional business-context playbooks. Use this skill whenever the user wants to analyze data, explore a dataset, profile data quality, find patterns, detect anomalies, understand trends, or get insights from tabular data. Also trigger when users say things like 'look at this data', 'what does this CSV show', 'analyze this file', 'help me understand these numbers', 'find patterns in', 'data quality check', or mention any data file they want to explore — even if they don't explicitly say 'analysis'."
+description: "Analyze CSV, Parquet, and JSON datasets using DuckDB with Six Thinking Hats methodology and optional business-context playbooks."
 ---
 
 # Data Analysis
@@ -54,7 +54,7 @@ If loading fails (bad path, corrupt file, encoding issues), show the error clear
 
 Read the user's questions, the data schema, and the playbook context (if any). Based on data shape (column types, row count, cardinality), propose which analysis techniques to apply.
 
-**Available techniques** (read from `guides/` directory if available, otherwise use these defaults):
+**Available techniques**:
 
 | Technique | When to use |
 |-----------|------------|
@@ -161,7 +161,7 @@ My quick read:
 Does this match your intuition? If not, tell me what I'm reading wrong — this is where your domain knowledge matters most.
 ```
 
-**Wait for user reaction.** This phase calibrates interpretation. If the user corrects you here (like the A < B < C > D example — where a seemingly anomalous pattern is actually normal), that correction should inform all subsequent phases.
+**Wait for user reaction.** This phase calibrates interpretation. If the user corrects you here — e.g., a pattern you flagged as anomalous is actually normal in their domain — that correction should inform all subsequent phases.
 
 ---
 
@@ -181,15 +181,18 @@ con.execute("""
 """)
 
 # Duplicate rows
-con.execute("SELECT COUNT(*) - COUNT(DISTINCT *) as dupes FROM data")
-
-# Outliers (IQR method for each numeric column)
 con.execute("""
-    SELECT column_name,
-           percentile_cont(0.25) WITHIN GROUP (ORDER BY col) as q1,
-           percentile_cont(0.75) WITHIN GROUP (ORDER BY col) as q3
+    SELECT COUNT(*) - (SELECT COUNT(*) FROM (SELECT DISTINCT * FROM data)) as dupes
     FROM data
 """)
+
+# Outliers (IQR method — run per numeric column)
+for col_name in numeric_columns:
+    con.execute(f"""
+        SELECT percentile_cont(0.25) WITHIN GROUP (ORDER BY "{col_name}") as q1,
+               percentile_cont(0.75) WITHIN GROUP (ORDER BY "{col_name}") as q3
+        FROM data
+    """)
 ```
 
 **If a playbook is loaded**, check data against expected patterns:
@@ -238,7 +241,7 @@ How would you like to handle these? Proceed as-is, or apply cleaning?
 
 Execute the techniques selected in the Blue Hat plan. This is the main analytical phase — run DuckDB queries for each technique and present results.
 
-For each technique, run the relevant queries. If a `guides/[technique].md` file exists, read it for specific query patterns. Otherwise, use standard approaches:
+For each technique, run the relevant queries using standard approaches:
 
 - **Distribution**: `SELECT col, COUNT(*) FROM data GROUP BY col ORDER BY COUNT(*) DESC LIMIT 20`
 - **Trend**: `SELECT date_trunc('month', date_col), COUNT(*), AVG(metric) FROM data GROUP BY 1 ORDER BY 1`
@@ -325,21 +328,6 @@ After all phases complete (or user says they're satisfied):
 **Data quality notes:**
 - [Key caveats to keep in mind when acting on these findings]
 ```
-
----
-
-## Playbook System
-
-Playbooks provide business context that changes how findings are interpreted. They live in the plugin's `playbooks/` directory or can be loaded from any path.
-
-See `playbooks/_template.md` for the format. A playbook has:
-
-1. **Context section** (required): Domain vocabulary, what columns mean, what "normal" looks like, business rules and definitions
-2. **Expected Patterns section** (required): Patterns that should NOT be flagged as anomalies — this is where domain knowledge prevents false alarms
-3. **Key Metrics section** (optional): What to compute and what good/bad looks like
-4. **Steps section** (optional): If present, overrides the default Blue Hat plan with prescribed analysis steps
-
-The playbook's Context and Expected Patterns sections are injected into every hat phase so interpretations stay business-relevant throughout.
 
 ---
 

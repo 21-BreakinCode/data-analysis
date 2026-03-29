@@ -4,7 +4,7 @@ Structured data analysis for Claude Code using DuckDB and the Six Thinking Hats 
 
 ## Quick Start
 
-1. Install DuckDB: `pip install duckdb`
+1. Install DuckDB: `brew install duckdb`
 2. Install the plugin in Claude Code: `/install-plugin /path/to/data-analysis`
 3. Run: `/data-analysis` — the guided wizard will walk you through setup
 
@@ -16,14 +16,14 @@ so you always know what the data actually shows vs. what it might mean.
 
 ### The Six Phases
 
-| Phase | Hat | Purpose |
-|-------|-----|---------|
-| 1 | Blue (Plan) | Propose which analysis techniques to apply |
-| 2 | White (Profile) | Raw data facts — column stats, distributions, nulls |
-| 3 | Red (Impression) | Quick gut reaction — does anything look off? |
-| 4 | Black (Quality) | Data quality issues, caveats, limitations |
-| 5 | Yellow (Findings) | Key insights and business-relevant patterns |
-| 6 | Green (Creativity) | Alternative perspectives and unexplored angles |
+| Phase | Hat                | Purpose                                             |
+| ----- | ------------------ | --------------------------------------------------- |
+| 1     | Blue (Plan)        | Propose which analysis techniques to apply          |
+| 2     | White (Profile)    | Raw data facts — column stats, distributions, nulls |
+| 3     | Red (Impression)   | Quick gut reaction — does anything look off?        |
+| 4     | Black (Quality)    | Data quality issues, caveats, limitations           |
+| 5     | Yellow (Findings)  | Key insights and business-relevant patterns         |
+| 6     | Green (Creativity) | Alternative perspectives and unexplored angles      |
 
 You review and approve each phase before the next one begins.
 
@@ -42,43 +42,17 @@ A < B is perfectly normal. A playbook tells the plugin this, preventing false al
 ### Creating a Playbook
 
 1. Copy the template:
+
    ```bash
    cp playbooks/_template.md playbooks/my-company.md
    ```
 
-2. Edit `playbooks/my-company.md` and fill in four sections:
-
-   **Context** (required) — What your data means:
-   ```markdown
-   ## Context
-   - `status` column: 1=active, 2=paused, 3=cancelled
-   - `revenue` is MRR in USD cents (divide by 100 for dollars)
-   - Data exported from Stripe every Monday
-   ```
-
-   **Expected Patterns** (required) — What should NOT be flagged as anomalies:
-   ```markdown
-   ## Expected Patterns
-   - Weekend volume drops 40-60% — this is normal
-   - Q4 revenue is 2-3x other quarters due to renewals
-   - Null in `referral_source` is expected for organic traffic (~30%)
-   ```
-
-   **Key Metrics** (optional) — What to measure and what good/bad looks like:
-   ```markdown
-   ## Key Metrics
-   - Churn rate: cancelled / total active, healthy = <5% monthly
-   - AOV: revenue / orders, target = $85-120
-   ```
-
-   **Steps** (optional) — Override the default analysis plan:
-   ```markdown
-   ## Steps
-   1. Check data freshness
-   2. Compute MRR by cohort month
-   3. Calculate retention by cohort
-   4. Flag cohorts with retention below 70%
-   ```
+2. Edit `playbooks/my-company.md` and fill in the four sections. The template includes
+   annotated examples for each:
+   - **Context** (required) — What your data means, column definitions, business rules
+   - **Expected Patterns** (required) — What should NOT be flagged as anomalies
+   - **Key Metrics** (optional) — What to measure and what good/bad looks like
+   - **Steps** (optional) — Override the default analysis plan
 
 3. When you run `/data-analysis`, the wizard will offer your playbook as an option.
 
@@ -119,7 +93,5 @@ data-analysis/
 ├── playbooks/                     — Business context files
 │   ├── _template.md               — Copy this to create your own
 │   └── example-ecommerce.md       — Working example
-├── guides/                        — Analysis technique references (future)
-├── hats/                          — Phase-specific instructions (future)
-└── lib/                           — DuckDB helper scripts (future)
+└── .claude-plugin/plugin.json     — Plugin metadata
 ```
