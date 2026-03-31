@@ -1,0 +1,191 @@
+{
+  "run_id": "2026-03-31-150000",
+  "timestamp": "2026-03-31T15:00:00Z",
+  "skill_hash": "2b60c14",
+  "total_score": 18,
+  "max_score": 36,
+  "pass": false,
+  "target": 36,
+  "metrics": [
+    {
+      "metric": "direction-quality",
+      "score": 1,
+      "max_score": 3,
+      "evidence": [
+        "SKILL.md line 33: asks 'What questions do you have about this data?' — descriptive, not decision-driven",
+        "SKILL.md line 55: proposes techniques based on data shape, not hypotheses",
+        "SKILL.md lines 71-87: Blue Hat output shows technique recommendations but no causal framing"
+      ],
+      "gaps": [
+        "Missing: Wizard does not ask 'What decision will this analysis inform?'",
+        "Missing: Blue Hat does not distinguish correlation from causation or propose hypothesis testing",
+        "Missing: Summary does not reconnect findings to original business decision"
+      ],
+      "recommendation": "Add a 4th Wizard question: 'What business decision depends on this analysis?' Add Blue Hat causal hypothesis section: 'Based on playbook context, I propose testing these hypotheses: [H1], [H2]'. Add Summary reconnection: 'Does the data support your initial hypothesis?'"
+    },
+    {
+      "metric": "insight-novelty",
+      "score": 1,
+      "max_score": 3,
+      "evidence": [
+        "SKILL.md lines 298-303: Green Hat lists alternatives generically without structured novelty-seeking",
+        "SKILL.md lines 244-251: Yellow Hat defines standard techniques with no derived metrics instruction"
+      ],
+      "gaps": [
+        "Missing: Green Hat does not explicitly prompt for contrarian hypotheses",
+        "Missing: No instruction to compute derived metrics (LTV-adjusted ROAS, pixel-confidence-adjusted conversions)",
+        "Missing: No mechanism to surface unexpected segments that defy playbook expectations"
+      ],
+      "recommendation": "Add mandatory Green Hat contrarian tests: test if underperforming segments are undervalued due to signal quality. Add Yellow Hat derived metrics instruction when playbook is loaded."
+    },
+    {
+      "metric": "query-efficiency",
+      "score": 2,
+      "max_score": 3,
+      "evidence": [
+        "SKILL.md lines 108-111: sampling thresholds defined (100K, 1M)",
+        "SKILL.md line 253: result sets limited to 50 rows"
+      ],
+      "gaps": [
+        "Missing: No instruction to profile once in White Hat and reuse across phases",
+        "Missing: No CTE or temp table guidance for intermediate results",
+        "Missing: No instruction to batch related queries"
+      ],
+      "recommendation": "Add White Hat 'Reusable Profile Summary' subsection: store profiling as temp table, reference in all subsequent phases."
+    },
+    {
+      "metric": "context-boundary",
+      "score": 3,
+      "max_score": 3,
+      "evidence": [
+        "Each phase has explicit Purpose statement",
+        "White Hat has zero interpretation",
+        "Output formats defined per phase",
+        "Explicit pause points between phases"
+      ],
+      "gaps": [],
+      "recommendation": "No changes needed."
+    },
+    {
+      "metric": "uncertainty",
+      "score": 1,
+      "max_score": 3,
+      "evidence": [
+        "SKILL.md line 8: FACT/ASSUME tags separate observation from interpretation"
+      ],
+      "gaps": [
+        "Missing: No instruction to compute sample sizes (N) per segment",
+        "Missing: No threshold for minimum N to report as reliable",
+        "Missing: No confidence intervals or effect sizes",
+        "Missing: No hedging language requirements in ASSUME blocks",
+        "Missing: Black Hat never flags insufficient sample sizes"
+      ],
+      "recommendation": "Add Black Hat 'Sample Size Assessment': compute N per group, flag N<30 as suggestive only. Add Yellow Hat instruction to include N per group in all GROUP BY results. Require hedging in ASSUME when N is small."
+    },
+    {
+      "metric": "data-quality",
+      "score": 2,
+      "max_score": 3,
+      "evidence": [
+        "SKILL.md lines 176-195: specific DuckDB queries for nulls, duplicates, outliers",
+        "SKILL.md lines 198-202: playbook consistency check"
+      ],
+      "gaps": [
+        "Missing: No instruction to link quality issues to affected downstream analyses",
+        "Missing: No date freshness/gap detection",
+        "Missing: No quality re-check after filtering"
+      ],
+      "recommendation": "Add Black Hat instruction to state which analyses are affected by each quality issue. Add date gap detection query. Add re-check instruction after user applies filtering."
+    },
+    {
+      "metric": "segmentation",
+      "score": 1,
+      "max_score": 3,
+      "evidence": [
+        "SKILL.md line 250: single-dimensional GROUP BY only"
+      ],
+      "gaps": [
+        "Missing: No warning against global averages masking segment differences",
+        "Missing: No multi-dimensional segmentation guidance",
+        "Missing: No Simpson's paradox check",
+        "Missing: No instruction to identify which segments drive aggregate changes"
+      ],
+      "recommendation": "Add Yellow Hat multi-dimensional GROUP BY default: 'Always segment by at least 2 dimensions before reporting aggregates.' Add Simpson's paradox check: 'Compare per-segment trend vs blended aggregate.'"
+    },
+    {
+      "metric": "actionability",
+      "score": 1,
+      "max_score": 3,
+      "evidence": [
+        "SKILL.md line 227-229: Black Hat SUGGEST is generic"
+      ],
+      "gaps": [
+        "Missing: No SUGGEST tags in Yellow Hat with specific actions",
+        "Missing: Summary has no prioritized recommendation list",
+        "Missing: No mechanism to convert playbook thresholds into entity-level recommendations"
+      ],
+      "recommendation": "Add Yellow Hat recommendation mechanism: for each finding exceeding playbook threshold, generate SUGGEST with action type, entity, magnitude, expected outcome. Add Summary 'Recommended Actions' section prioritized by impact."
+    },
+    {
+      "metric": "followup",
+      "score": 2,
+      "max_score": 3,
+      "evidence": [
+        "SKILL.md line 279: generic drill-down invitation",
+        "SKILL.md lines 319-330: Summary has Open Questions placeholder"
+      ],
+      "gaps": [
+        "Missing: Yellow Hat lacks instruction to generate specific follow-up questions from findings",
+        "Missing: No Follow-Up Queue mechanism",
+        "Missing: Playbook follow-up steps never referenced in analysis phases"
+      ],
+      "recommendation": "Add Yellow Hat instruction to generate one specific follow-up question per finding. Add Follow-Up Queue to Summary with what additional data would resolve each question."
+    },
+    {
+      "metric": "simplicity",
+      "score": 2,
+      "max_score": 3,
+      "evidence": [
+        "SKILL.md uses IQR for outliers, standard SQL for all techniques",
+        "SKILL.md lines 108-111: simple threshold-based sampling"
+      ],
+      "gaps": [
+        "Missing: No explicit simplicity-first principle",
+        "Missing: No data-shape-driven escalation criteria"
+      ],
+      "recommendation": "Add Blue Hat simplicity principle: 'I start with SQL aggregation and basic statistics. I only escalate to advanced methods if the simple approach demonstrably fails to answer your question.'"
+    },
+    {
+      "metric": "narrative",
+      "score": 1,
+      "max_score": 3,
+      "evidence": [
+        "SKILL.md line 51: Blue Hat sets frame but no later phase revisits it",
+        "SKILL.md lines 319-329: Summary is a list, not a narrative arc"
+      ],
+      "gaps": [
+        "Missing: Yellow Hat does not reference Black Hat caveats or Red Hat impression",
+        "Missing: Green Hat does not reference Yellow Hat conclusions",
+        "Missing: Summary does not revisit Red Hat impression or close Blue Hat narrative",
+        "Missing: Summary is structured as categories, not a coherent story"
+      ],
+      "recommendation": "Add cross-referencing instructions: Yellow Hat references Black Hat caveats. Green Hat builds on Yellow Hat. Summary revisits Red Hat impression, closes Blue Hat frame, weaves findings into narrative arc."
+    },
+    {
+      "metric": "success-metrics",
+      "score": 1,
+      "max_score": 3,
+      "evidence": [
+        "SKILL.md line 276: mentions playbook thresholds but does not instruct comparison"
+      ],
+      "gaps": [
+        "Missing: No Wizard/Blue Hat step to establish success criteria before analysis",
+        "Missing: Yellow Hat does not compare findings against playbook thresholds",
+        "Missing: No metric validity check",
+        "Missing: Summary does not evaluate against pre-defined targets"
+      ],
+      "recommendation": "Add Blue Hat criteria-setting: extract playbook Key Metrics and confirm with user. Add Yellow Hat 'Metric vs. Target' comparison. Add Summary 'Evaluation Against Criteria' section."
+    }
+  ],
+  "summary": "Baseline score 18/36. Only context-boundary passes (3/3). Critical gaps: direction-quality, insight-novelty, uncertainty, segmentation, actionability, narrative, and success-metrics all score 1/3. Need improvements in causal framing, uncertainty quantification, multi-dimensional segmentation, actionable recommendations, narrative arc, and success metric validation."
+}

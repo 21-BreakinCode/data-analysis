@@ -1,0 +1,24 @@
+{
+  "run_id": "2026-03-31-170000",
+  "timestamp": "2026-03-31T17:00:00Z",
+  "skill_hash": "1bc1fb1",
+  "total_score": 29,
+  "max_score": 36,
+  "pass": false,
+  "target": 36,
+  "metrics": [
+    {"metric": "direction-quality", "score": 3, "max_score": 3, "evidence": ["Mandatory causal hypothesis", "Correlation vs causation distinction", "Hypothesis verdict in Summary"], "gaps": [], "recommendation": "None"},
+    {"metric": "insight-novelty", "score": 2, "max_score": 3, "evidence": ["Green Hat contrarian tests", "Derived metrics", "Simpson's paradox"], "gaps": ["Contrarian tests in Green Hat are optional", "No mandatory dimension crossing in Yellow Hat"], "recommendation": "Move contrarian tests to Yellow Hat as mandatory checkpoint"},
+    {"metric": "query-efficiency", "score": 2, "max_score": 3, "evidence": ["Sampling thresholds", "Profile reuse instruction", "CTE example"], "gaps": ["No consolidated efficiency checklist", "LIMIT not mandated textually", "Profile reuse not enforced across phases"], "recommendation": "Add efficiency checklist before Yellow Hat queries"},
+    {"metric": "context-boundary", "score": 2, "max_score": 3, "evidence": ["Phase purposes defined", "Output formats defined"], "gaps": ["No Input/Output/Constraint headers per phase"], "recommendation": "Add I/O/Constraint headers to each phase"},
+    {"metric": "uncertainty", "score": 3, "max_score": 3, "evidence": ["N thresholds", "STDDEV", "Confidence indicators", "Cannot-prove statements"], "gaps": [], "recommendation": "None"},
+    {"metric": "data-quality", "score": 3, "max_score": 3, "evidence": ["Quality queries", "Risk impact", "Date gaps", "Re-check after filtering"], "gaps": [], "recommendation": "None"},
+    {"metric": "segmentation", "score": 3, "max_score": 3, "evidence": ["Averaging warning", "Multi-dimensional default", "Simpson's paradox with example"], "gaps": [], "recommendation": "None"},
+    {"metric": "actionability", "score": 2, "max_score": 3, "evidence": ["SUGGEST template with example", "Recommended Actions in Summary"], "gaps": ["SUGGEST is conditional not mandatory", "No playbook Step enforcement"], "recommendation": "Make SUGGEST mandatory for every threshold violation"},
+    {"metric": "followup", "score": 2, "max_score": 3, "evidence": ["Follow-Up Queue exists", "Open Questions in Summary"], "gaps": ["Queue not formatted as standalone block", "No playbook step cross-check enforcement"], "recommendation": "Make Follow-Up Queue a standalone output block"},
+    {"metric": "simplicity", "score": 2, "max_score": 3, "evidence": ["Simplicity principle stated", "IQR for outliers"], "gaps": ["No escalation gate examples", "No operational definition of 'demonstrably fails'"], "recommendation": "Add escalation gate with 4 concrete examples"},
+    {"metric": "narrative", "score": 2, "max_score": 3, "evidence": ["Cross-phase references", "Red Hat revisited", "Blue Hat frame"], "gaps": ["Summary lacks narrative scaffolding", "Weave instruction too vague"], "recommendation": "Add 4-step narrative template in Summary"},
+    {"metric": "success-metrics", "score": 3, "max_score": 3, "evidence": ["Mandatory criteria setting", "Metric vs Target", "Evaluation table"], "gaps": [], "recommendation": "None"}
+  ],
+  "summary": "Score 29/36. 5 metrics pass (direction-quality, uncertainty, data-quality, segmentation, success-metrics). 7 metrics at 2/3 need final push: context-boundary needs I/O headers, insight-novelty needs Yellow Hat integration, query-efficiency needs checklist, actionability needs mandatory SUGGEST, followup needs formatted queue, simplicity needs escalation gates, narrative needs scaffolded template."
+}

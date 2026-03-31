@@ -1,0 +1,24 @@
+{
+  "run_id": "2026-03-31-160000",
+  "timestamp": "2026-03-31T16:00:00Z",
+  "skill_hash": "76702df",
+  "total_score": 25,
+  "max_score": 36,
+  "pass": false,
+  "target": 36,
+  "metrics": [
+    {"metric": "direction-quality", "score": 2, "max_score": 3, "evidence": ["Wizard asks decision context and root cause", "Blue Hat proposes H1/H2 hypotheses", "Summary includes hypothesis verdict"], "gaps": ["Causal hypothesis conditional not mandatory", "No explicit correlation vs causation teaching", "Blue Hat lacks narrative frame"], "recommendation": "Make causal framing mandatory. Add correlation vs causation distinction."},
+    {"metric": "insight-novelty", "score": 2, "max_score": 3, "evidence": ["Green Hat mandatory contrarian tests", "Yellow Hat derived metrics", "Multi-dimensional segmentation"], "gaps": ["Contrarian tests framed as suggestions not directives", "No explicit 'what would surprise?' checkpoint", "Novelty concentrated in Green Hat only"], "recommendation": "Add mandatory novelty checkpoint. Make contrarian tests structural."},
+    {"metric": "query-efficiency", "score": 2, "max_score": 3, "evidence": ["Sampling thresholds defined", "Profile reuse instruction exists", "LIMIT guidance present"], "gaps": ["Profile reuse not integrated into downstream phases", "No CTE demonstrations", "No batching enforcement", "LIMIT inconsistent"], "recommendation": "Demonstrate CTEs in Yellow Hat. Enforce LIMIT on all GROUP BY. Reference profile_summary in downstream phases."},
+    {"metric": "context-boundary", "score": 3, "max_score": 3, "evidence": ["Perfect phase separation"], "gaps": [], "recommendation": "None needed."},
+    {"metric": "uncertainty", "score": 1, "max_score": 3, "evidence": ["N<30 flagging exists", "Hedging language tiers defined"], "gaps": ["No confidence intervals", "No statistical significance tests", "No effect sizes", "N not enforced in output tables", "No uncertainty propagation for derived metrics"], "recommendation": "Add confidence interval instruction. Require N in all GROUP BY result tables. Add effect size guidance."},
+    {"metric": "data-quality", "score": 2, "max_score": 3, "evidence": ["Null/dupe/outlier queries present", "Date gap detection added", "Playbook validation exists"], "gaps": ["Quality-to-risk not in output template", "No worked example", "Post-filtering re-check not in template", "No playbook validation query template"], "recommendation": "Add Risk Impact table to Black Hat output. Add worked example."},
+    {"metric": "segmentation", "score": 2, "max_score": 3, "evidence": ["Multi-dimensional default", "Simpson's paradox check"], "gaps": ["No averaging warning", "No worked decomposition example", "Playbook segments not wired to defaults"], "recommendation": "Add averaging warning. Add worked example showing segment decomposition."},
+    {"metric": "actionability", "score": 2, "max_score": 3, "evidence": ["SUGGEST tags with action template", "Summary has Recommended Actions"], "gaps": ["No worked example", "Playbook steps not driving SUGGESTs", "No priority formula"], "recommendation": "Add worked recommendation example. Link playbook Steps to SUGGEST generation."},
+    {"metric": "followup", "score": 2, "max_score": 3, "evidence": ["Follow-Up Queue in Yellow Hat", "Open Questions in Summary", "Green Hat alternatives"], "gaps": ["Queue underspecified", "Playbook steps not mapped to follow-ups", "Green Hat doesn't reference Yellow Hat findings", "No prioritization"], "recommendation": "Expand Follow-Up Queue guidance. Map playbook steps to follow-ups. Prioritize by impact."},
+    {"metric": "simplicity", "score": 3, "max_score": 3, "evidence": ["Explicit simplicity principle", "Data-shape-driven selection", "Escalation criteria clear"], "gaps": [], "recommendation": "None needed."},
+    {"metric": "narrative", "score": 2, "max_score": 3, "evidence": ["Cross-phase references added", "Summary revisits Red Hat", "Narrative instruction present"], "gaps": ["Blue Hat lacks narrative frame statement", "Red Hat lacks testable hypothesis capture", "Black Hat doesn't reference Blue Hat techniques"], "recommendation": "Add Blue Hat narrative frame. Add Red Hat hypothesis. Link Black Hat to Blue Hat."},
+    {"metric": "success-metrics", "score": 2, "max_score": 3, "evidence": ["Blue Hat extracts playbook thresholds", "Yellow Hat Metric vs Target", "Summary Evaluation table"], "gaps": ["Criteria setting conditional on playbook", "No Wizard-level success question", "Metric validity checks generic"], "recommendation": "Make criteria setting mandatory. Add Wizard question about success definition."}
+  ],
+  "summary": "Score 25/36 after iteration 1 improvements. 2 metrics pass (context-boundary, simplicity). 9 metrics at 2/3, 1 metric (uncertainty) at 1/3. Key remaining gaps: uncertainty needs statistical rigor, all score-2 metrics need worked examples and mandatory (not conditional) instructions."
+}
